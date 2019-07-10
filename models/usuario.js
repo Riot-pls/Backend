@@ -14,12 +14,59 @@ var roleValidos={
 
 };
 
+
+// Array de los distintos tipos de usuario.
+var tipoUsuarioValido={
+
+    values:['Estudiante','Docente'],
+    message: '{VALUE} NO ES UN TIPO DE USUARIO PERMITIDO'
+
+};
+
+// Array de los distintos tipos de ID.
+var tipoIDValido={
+
+    values:['C.C','T.I'],
+    message: '{VALUE} NO ES UN TIPO DE ID PERMITIDO'
+
+};
+
+var sedesUniversitariasValidas={
+
+    values:['Gárzon','La plata','Neiva','Pitalito'],
+    message: '{VALUE} NO ES UNA SEDE PERMITIDO'
+
+};
+var facultadesValidas={
+
+    values:['Ingeniería'],
+    message: '{VALUE} NO ES UNA FACULTAD PERMITIDO'
+
+};
+
+var programaUniversitarioValidos={
+
+    values:['Ingeniería de software'],
+    message: '{VALUE} NO ES UN PROGRAMA PERMITIDO'
+
+};
+
 var usuarioSchema = new Schema({  //Esquema con validaciones.
 
-    nombre:{ type:String, required:[true, 'El nombre es necesario']},
+    nombres:{ type:String, required:[true, 'El nombre es necesario']},
+    apellidos:{ type:String, required:[true, 'El apellido es necesario']},
+    password:{ type:String, required:[true, 'La contraseña es necesaria']},
     email:{ type:String,unique:true, required:[true, 'El correo es necesario']},
-    password:{ type:String, required:[true, 'La contraseña es necesario']},
-    img:{ type:String, required:false},
+    telefono:{ type:String, required:[true, 'El telefono es necesario']},
+    tipoUsuario:{ type:String, required:true,default:'Estudiante', enum: tipoUsuarioValido},
+    tipoID:{ type:String, required:true,default:'C.C', enum: tipoIDValido},
+    numDocumento:{ type:String,unique:true, required:[true, 'El numero de documento es necesario']},
+    codigoUniversitario:{ type:String,unique:true, required:[true, 'El codigo universitario es necesario']},
+    sedeUniversitaria:{ type:String, required:[true, 'La sede es necesaria'], enum: sedesUniversitariasValidas},
+    facultad:{ type:String, required:[true, 'La facultad es necesaria'], enum: facultadesValidas},
+    programaUniversitario:{ type:String, required:[true, 'El programa es necesario.'], enum: programaUniversitarioValidos},
+    estado:{ type:Boolean ,default:true},
+
     role:{ type:String, required:true,default:'USER_ROLE', enum: roleValidos},
     google:{ type:Boolean,default:false}
 });

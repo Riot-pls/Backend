@@ -24,8 +24,8 @@ app.get('/',(req,res,next)=>{
     var desde=req.query.desde ||0;
     desde=Number(desde);
 
-
-    Usuario.find({},'nombre email img role google').skip(desde).limit(5).exec(
+// CAMBIO!!! -*-*-*-*-*-*-*
+    Usuario.find({},'nombres apellidos email telefono tipoUsuario tipoID numDocumento codigoUniversitario sedeUniversitaria facultad programaUniversitario role google').skip(desde).limit(5).exec( 
         (err,usuarios)=>{
 
         if(err){
@@ -89,9 +89,9 @@ app.use('/',(req,res,next)=>{
 //===============================================
 // Se puede utilizar put or path
 
-
-
-app.put('/:id',[mdAutenticacion.verificarToken,mdAutenticacion.verificaraADMIN_ROLE_o_MismoUsuario],(req,res)=>{
+// CAMBIO!!! -*-*-*-*-*-*-*
+//app.put('/:id',[mdAutenticacion.verificarToken,mdAutenticacion.verificaraADMIN_ROLE_o_MismoUsuario],(req,res)=>{
+app.put('/:id',(req,res)=>{
 
 var id = req.params.id;
 var body = req.body;
@@ -115,8 +115,18 @@ Usuario.findById(id,(err,usuario)=>{
     }
 
 
-    usuario.nombre = body.nombre;
+    usuario.nombres = body.nombres;
+    usuario.apellidos= body.apellidos;
     usuario.email = body.email;
+    usuario.telefono= body.telefono;
+    usuario.tipoUsuario= body.tipoUsuario;
+    usuario.tipoID=body.tipoID;
+    usuario.numDocumento=body.numDocumento;
+    usuario.codigoUniversitario= body.codigoUniversitario;
+    usuario.sedeUniversitaria=body.sedeUniversitaria;
+    usuario.facultad= body.facultad;
+    usuario.programaUniversitario= body.programaUniversitario;
+    usuario.estado=body.estado;
     usuario.role = body.role;
 
     usuario.save((err,usuarioGuardado)=>{
@@ -163,10 +173,19 @@ app.post('/',(req,res)=>{
 
     var usuario= new Usuario({ //referencia a una variable de tipo usuario
 
-        nombre: body.nombre,
+        nombres: body.nombres,
+        apellidos: body.apellidos,
         email: body.email,
         password: bcrypt.hashSync(body.password, 10),
-        img: body.img,
+        telefono:body.telefono,
+        tipoUsuario:body.tipoUsuario,
+        tipoID:body.tipoID,
+        numDocumento:body.numDocumento,
+        codigoUniversitario: body.codigoUniversitario,
+        sedeUniversitaria:body.sedeUniversitaria,
+        facultad: body.facultad,
+        programaUniversitario: body.programaUniversitario,
+        estado:body.estado,
         role: body.role
     }); 
 
@@ -196,8 +215,9 @@ app.post('/',(req,res)=>{
 //===============================================
 //  Eliminar usuarios por el id.
 //===============================================
-
-app.delete('/:id',[mdAutenticacion.verificarToken, mdAutenticacion.verificaraADMIN_ROLE],(req,res)=>{
+// CAMBIO!!! -*-*-*-*-*-*-*
+//app.delete('/:id',[mdAutenticacion.verificarToken, mdAutenticacion.verificaraADMIN_ROLE],(req,res)=>{
+app.delete('/:id',(req,res)=>{
 
     var id = req.params.id; // id por el /:id.
 
