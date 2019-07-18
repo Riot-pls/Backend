@@ -25,7 +25,7 @@ app.get('/',(req,res,next)=>{
     desde=Number(desde);
 
 // CAMBIO!!! -*-*-*-*-*-*-*
-    Usuario.find({},'nombres apellidos email telefono tipoUsuario tipoID numDocumento codigoUniversitario sedeUniversitaria facultad programaUniversitario role google').skip(desde).limit(5).exec( 
+    Usuario.find({},'nombres apellidos email telefono tipoUsuario tipoID numDocumento codigoUniversitario sedeUniversitaria facultad programaUniversitario role').skip(desde).limit(5).exec( 
         (err,usuarios)=>{
 
         if(err){

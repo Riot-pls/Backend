@@ -66,9 +66,7 @@ var usuarioSchema = new Schema({  //Esquema con validaciones.
     facultad:{ type:String, required:[true, 'La facultad es necesaria'], enum: facultadesValidas},
     programaUniversitario:{ type:String, required:[true, 'El programa es necesario.'], enum: programaUniversitarioValidos},
     estado:{ type:Boolean ,default:true},
-
-    role:{ type:String, required:true,default:'USER_ROLE', enum: roleValidos},
-    google:{ type:Boolean,default:false}
+    role:{ type:String, required:true,default:'USER_ROLE', enum: roleValidos}
 });
 
 usuarioSchema.plugin(uniqueValidator,{message: '{PATH} debe ser unico'});

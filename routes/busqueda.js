@@ -133,8 +133,8 @@ function buscarMedicos(busqueda, regex){
 function buscarUsuarios(busqueda, regex){
 
     return new Promise((resolve,reject)=>{
-        Usuario.find({},'nombre email role img')
-        .or([ {'nombre':regex}, {'email':regex}])
+        Usuario.find({},'nombres apellidos email telefono tipoUsuario tipoID numDocumento codigoUniversitario sedeUniversitaria facultad programaUniversitario role')
+        .or([ {'nombres':regex}, {'email':regex}, {'numDocumento':regex}])
         .exec((err,usuarios)=>{
 
             if(err){
