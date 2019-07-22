@@ -36,7 +36,7 @@ app.post('/',(req,res)=>{
 
     var body = req.body;
 
-    Usuario.findOne({email:body.email},(err,usuarioDB)=>{
+    Usuario.findOne({numDocumento:body.numDocumento},(err,usuarioDB)=>{
         if(err){
             return res.status(500).json({
                 ok:false,
@@ -48,7 +48,7 @@ app.post('/',(req,res)=>{
         if(!usuarioDB){
             return res.status(400).json({
                 ok:false,
-                mensaje: 'Credenciales no validas-email.',
+                mensaje: 'Credenciales no validas- Numero de documento.',
                 errors:err
             });
         }
