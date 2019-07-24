@@ -197,6 +197,7 @@ app.post('/',(req,res)=>{
                 mensaje: 'Error al crear usuarios!',
                 errors:err
             });
+          
         }
         res.status(201).json({
             ok:true,
