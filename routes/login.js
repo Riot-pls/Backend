@@ -94,22 +94,20 @@ function obtenerMenu(ROLE) {
           titulo:'Principal',
           icono:'mdi mdi-gauge',
           submenu:[
-            {titulo:'Dashboard',url:'/dashboard'},
-            {titulo:'ProgressBar',url:'/progress'},
-            {titulo:'Graficas',url:'/graficas1'},
-            {titulo:'Promesas',url:'/promesas'},
-            {titulo:'RxJs',url:'/rxjs'}
+            {titulo:'> Inicio',url:'/search'},
+            {titulo:'> Plantilla solicitud',url:'/solicitud'},
+            {titulo:'> Plantilla anteproyecto',url:'/panteproyecto'},
+            {titulo:'> Subir anteproyecto',url:'/santeproyecto'},
+            {titulo:'> Subir proyecto',url:'/sproyecto'}
           ]
     
     
         },
         {
-          titulo:'Mantenimientos',
+          titulo:'',
           icono:'mdi mdi-folder-lock-open',
           submenu:[
-            //{titulo:'Usuarios',url:'/usuarios'},
-            {titulo:'Hospitales',url:'/hospitales'},
-            {titulo:'Medicos',url:'/medicos'}
+          
           ]
         }
       ];
@@ -117,7 +115,17 @@ function obtenerMenu(ROLE) {
      
       if (ROLE==="ADMIN_ROLE") {
         
-        menu[1].submenu.unshift({titulo:'Usuarios',url:'/usuarios'});
+        menu[1].submenu.unshift(
+            
+        {titulo:'> Usuarios',url:'/usuarios'},
+        
+        {titulo:'> Programas académicos',url:'/programas'},
+
+        {titulo:'> Sedes',url:'/sedeUniversitaria'},
+
+        {titulo:'> Facultad',url:'/facultad'}
+        
+        );
        
       }
 
