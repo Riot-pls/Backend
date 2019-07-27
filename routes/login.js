@@ -95,10 +95,13 @@ function obtenerMenu(ROLE) {
           icono:'mdi mdi-gauge',
           submenu:[
             {titulo:'> Inicio',url:'/search'},
+            {titulo:'> Notificaciones',url:'/notificaciones'},
+            {titulo:'> Información',url:'/informacion'},
             {titulo:'> Plantilla solicitud',url:'/solicitud'},
-            {titulo:'> Plantilla anteproyecto',url:'/panteproyecto'},
-            {titulo:'> Subir anteproyecto',url:'/santeproyecto'},
-            {titulo:'> Subir proyecto',url:'/sproyecto'}
+            {titulo:'> Anteproyecto',url:'/anteproyecto'},
+            {titulo:'> Proyecto',url:'/proyecto'},
+            {titulo:'> Articulo',url:'/articulo'}
+            
           ]
     
     
@@ -117,13 +120,14 @@ function obtenerMenu(ROLE) {
         
         menu[1].submenu.unshift(
             
-        {titulo:'> Usuarios',url:'/usuarios'},
+        {titulo:'> Usuarios',url:'/admin/usuarios'},
         
-        {titulo:'> Programas académicos',url:'/programas'},
+        {titulo:'> Programas académicos',url:'/admin/programas'},
 
-        {titulo:'> Sedes',url:'/sedeUniversitaria'},
+        {titulo:'> Sedes',url:'/admin/sedeUniversitaria'},
 
-        {titulo:'> Facultad',url:'/facultad'}
+        {titulo:'> Facultad',url:'/admin/facultad'}
+        
         
         );
        

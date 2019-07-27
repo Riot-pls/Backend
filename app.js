@@ -41,9 +41,9 @@ var imagenesRoutes= require('./routes/imagenes');
 
 //Conexion a la base de datos.
 
-
+//--------- Cambiar nombre a BPUS !!!!!!! ---------------
 mongoose.connection.openUri('mongodb://localhost:27017/hospitalDB',(err,res)=>{
-
+//--------- Cambiar nombre a BPUS !!!!!!! ---------------
 
 if(err) throw err;
 
