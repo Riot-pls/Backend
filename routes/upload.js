@@ -5,8 +5,6 @@ var fs = require('fs');
 var app= express();
 // Modelo importados
 var Usuario = require('../models/usuario');
-var Hospital = require('../models/hospital');
-var Medico = require('../models/medico');
 
 // default options
 app.use(fileUpload());
@@ -120,7 +118,7 @@ app.put('/:tipo/:id',(req,res,next)=>{
 
             });
         }
-        if(tipo ==='medicos'){
+        /*if(tipo ==='medicos'){
 
 
             Medico.findById(id,(err,medico)=>{
@@ -155,42 +153,8 @@ app.put('/:tipo/:id',(req,res,next)=>{
 
             });
             
-        }
-        if(tipo ==='hospitales'){
-
-            Hospital.findById(id,(err,hospital)=>{
-                
-                if(!hospital){
-                    return res.status(400).json({
-                        ok:false,
-                        mensaje: 'hospital no existe',
-                        errors:{ message: 'hospital no existe'}
-                    }); 
-                }
-
-                var pathViejo = './uploads/hospitales/'+hospital.img;
-               
-                // Si existe, elimina la imagen anterior.
-                if(fs.existsSync(pathViejo)){
-
-                    fs.unlink(pathViejo);
-                }
-
-                hospital.img= nombreArchivo;
-
-                hospital.save((err,hospitalActualizado)=>{
-                    return res.status(200).json({
-                        ok:true,
-                        mensaje: 'Imagen de hospital actualizada',
-                        hospital: hospitalActualizado
-                    }); 
-
-
-                });
-
-            });
-            
-        }
+        }*/
+       
 
 
     }

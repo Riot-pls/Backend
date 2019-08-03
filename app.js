@@ -27,11 +27,13 @@ app.use(bodyParser.json())
 //Importar Rutas
 
 var appRoutes= require('./routes/app');
+
+var sedeUniversitaria= require('./routes/sedeUniversitaria');
+var programaUniversitario= require('./routes/programaUniversitario');
+var facultad= require('./routes/facultad');
+
 var usuarioRoutes= require('./routes/usuario');
 var loginRoutes= require('./routes/login');
-//tarea-importaciones
-var hospitalRoutes= require('./routes/hospital');
-var medicoRoutes= require('./routes/medico');
 //busqueda
 var busquedaRoutes= require('./routes/busqueda');
 //subir archivos
@@ -63,9 +65,12 @@ app.use('/uploads', serveIndex(__dirname + '/uploads'));*/
 
 //Rutas
 
+
+app.use('/sedeUniversitaria',sedeUniversitaria);
+app.use('/programaUniversitario',programaUniversitario);
+app.use('/facultad',facultad);
+
 app.use('/usuario',usuarioRoutes);
-app.use('/hospital',hospitalRoutes); // tarea
-app.use('/medico',medicoRoutes); // tarea
 app.use('/login',loginRoutes);
 app.use('/busqueda',busquedaRoutes);
 app.use('/upload',uploadRoutes);

@@ -4,8 +4,10 @@ var express = require('express');
 
 var app= express();
 
-var Hospital=require('../models/hospital');
-var Medico=require('../models/medico');
+
+var programa=require('../models/programaUniversitario');
+var facultad=require('../models/facultad');
+var sede=require('../models/sedeUniversitaria');
 var Usuario=require('../models/usuario');
 
 
@@ -25,13 +27,6 @@ app.get('/coleccion/:tabla/:busqueda',(req,res,next)=>{
     switch (tabla) {
         case 'usuarios':
             promesa=  buscarUsuarios(busqueda, regex);
-            break;
-
-        case 'medicos':
-            promesa=  buscarMedicos(busqueda, regex);
-            break;
-        case 'hospitales':
-            promesa=  buscarHospitales(busqueda, regex);
             break;
     
         default:
@@ -55,81 +50,6 @@ app.get('/coleccion/:tabla/:busqueda',(req,res,next)=>{
     });
 
 
-
-
-//===============================================
-//  Busqueda general- metodo get
-//===============================================
-app.get('/todo/:busqueda',(req,res,next)=>{
-
-    var busqueda= req.params.busqueda;
-    var regex= new RegExp(busqueda,'i'); //Expresion regular.
-//Procesos asincronos.
-
-    Promise.all([ // Arreglo de promesa, si todas funcionan manda un then, si no un catch.
-         buscarHospitales(busqueda,regex), 
-         buscarMedicos(busqueda,regex),
-         buscarUsuarios(busqueda, regex)]).then(respuestas =>{
-            res.status(200).json({
-                ok:true,
-                hospitales:respuestas[0],
-                medicos: respuestas[1],
-                usuarios:respuestas[2]
-            });
-
-         });
-
-
-
-    });
-
-
-function buscarHospitales(busqueda, regex){
-
-    return new Promise((resolve,reject)=>{
-        Hospital.find({ nombre:regex})
-        .populate('usuario','nombre email img')
-        .exec((err,hospitales)=>{ //  /busqueda/i <- Expresion regular 
-            if(err){
-                reject('Error al cargar hospitales',err);
-            }else{
-
-                resolve(hospitales);
-            }
-
-        });
-
-
-    });
-
-    
-}
-
-//===============================================
-//  Funciones de busquedas.
-//===============================================
-
-function buscarMedicos(busqueda, regex){
-
-    return new Promise((resolve,reject)=>{
-        Medico.find({ nombre:regex})
-        .populate('usuario','nombre email img')
-        .populate('hospital')
-        .exec((err,medicos)=>{ //  /busqueda/i <- Expresion regular 
-            if(err){
-                reject('Error al cargar medicos',err);
-            }else{
-
-                resolve(medicos);
-            }
-
-        });
-
-
-    });
-
-    
-}
 function buscarUsuarios(busqueda, regex){
 
     return new Promise((resolve,reject)=>{
