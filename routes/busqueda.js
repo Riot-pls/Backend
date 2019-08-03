@@ -134,7 +134,7 @@ function buscarUsuarios(busqueda, regex){
 
     return new Promise((resolve,reject)=>{
         Usuario.find({},'nombres apellidos email telefono tipoUsuario tipoID numDocumento codigoUniversitario sedeUniversitaria facultad programaUniversitario role')
-        .or([ {'nombres':regex}, {'email':regex}, {'numDocumento':regex}])
+        .or([ {'nombres':regex}, {'email':regex}, {'numDocumento':regex}, {'sedeUniversitaria':regex}, {'role':regex}, {'tipoUsuario':regex}, {'codigoUniversitario':regex}])
         .exec((err,usuarios)=>{
 
             if(err){

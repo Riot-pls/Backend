@@ -95,8 +95,6 @@ function obtenerMenu(ROLE) {
           icono:'mdi mdi-gauge',
           submenu:[
             {titulo:'> Inicio',url:'/search'},
-            {titulo:'> Notificaciones',url:'/notificaciones'},
-            {titulo:'> Información',url:'/informacion'},
             {titulo:'> Plantilla solicitud',url:'/solicitud'},
             {titulo:'> Anteproyecto',url:'/anteproyecto'},
             {titulo:'> Proyecto',url:'/proyecto'},
