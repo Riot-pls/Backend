@@ -94,11 +94,11 @@ function obtenerMenu(ROLE) {
           titulo:'Principal',
           icono:'mdi mdi-gauge',
           submenu:[
-            {titulo:'> Inicio',url:'/search'},
-            {titulo:'> Plantilla solicitud',url:'/solicitud'},
-            {titulo:'> Anteproyecto',url:'/anteproyecto'},
-            {titulo:'> Proyecto',url:'/proyecto'},
-            {titulo:'> Articulo',url:'/articulo'}
+            {titulo:' Inicio',url:'/search', icono:'fas fa-home'},
+            {titulo:' Plantilla solicitud',url:'/solicitud', icono:'far fa-file-alt'},
+            {titulo:' Anteproyecto',url:'/anteproyecto', icono:'fas fa-pencil-alt'},
+            {titulo:' Proyecto',url:'/proyecto', icono:'fas fa-puzzle-piece'},
+            {titulo:' Artículo',url:'/articulo', icono:'fas fa-puzzle-piece'}
             
           ]
     
@@ -115,16 +115,16 @@ function obtenerMenu(ROLE) {
 
      
       if (ROLE==="ADMIN_ROLE") {
-        
+        menu[1].titulo='CRUDS';
         menu[1].submenu.unshift(
             
-        {titulo:'> Usuarios',url:'/admin/usuarios'},
+        {titulo:' Usuarios',url:'/admin/usuarios', icono:'fas fa-users'},
         
-        {titulo:'> Programas académicos',url:'/admin/programas'},
+        {titulo:' Programas académicos',url:'/admin/programas', icono:'fas fa-chalkboard-teacher'},
 
-        {titulo:'> Sedes',url:'/admin/sedeUniversitaria'},
+        {titulo:' Sedes',url:'/admin/sedeUniversitaria', icono:'far fa-building'},
 
-        {titulo:'> Facultad',url:'/admin/facultad'}
+        {titulo:' Facultad',url:'/admin/facultad', icono:'far fa-building'}
         
         
         );
