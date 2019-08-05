@@ -91,7 +91,7 @@ app.post('/',(req,res)=>{
 function obtenerMenu(ROLE) {
    var menu=[
         {
-          titulo:'Principal',
+          titulo:'',
           icono:'mdi mdi-gauge',
           submenu:[
             {titulo:' Inicio',url:'/search', icono:'fas fa-home'},
@@ -115,7 +115,7 @@ function obtenerMenu(ROLE) {
 
      
       if (ROLE==="ADMIN_ROLE") {
-        menu[1].titulo='CRUDS';
+          
         menu[1].submenu.unshift(
             
         {titulo:' Usuarios',url:'/admin/usuarios', icono:'fas fa-users'},
