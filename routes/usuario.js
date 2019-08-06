@@ -25,7 +25,7 @@ app.get('/',(req,res,next)=>{
     desde=Number(desde);
 
 // CAMBIO!!! -*-*-*-*-*-*-*
-    Usuario.find({},'nombres apellidos email telefono tipoUsuario tipoID numDocumento codigoUniversitario sedeUniversitaria facultad programaUniversitario role').skip(desde).limit(5).exec( 
+    Usuario.find({},'nombres apellidos email telefono tipoUsuario tipoID numDocumento genero codigoUniversitario sedeUniversitaria facultad programaUniversitario role').skip(desde).limit(5).exec( 
         (err,usuarios)=>{
 
         if(err){
@@ -122,6 +122,7 @@ Usuario.findById(id,(err,usuario)=>{
     usuario.tipoUsuario= body.tipoUsuario;
     usuario.tipoID=body.tipoID;
     usuario.numDocumento=body.numDocumento;
+    usuario.genero=body.genero;
     usuario.codigoUniversitario= body.codigoUniversitario;
     usuario.sedeUniversitaria=body.sedeUniversitaria;
     usuario.facultad= body.facultad;
@@ -181,6 +182,7 @@ app.post('/',(req,res)=>{
         tipoUsuario:body.tipoUsuario,
         tipoID:body.tipoID,
         numDocumento:body.numDocumento,
+        genero:body.genero,
         codigoUniversitario: body.codigoUniversitario,
         sedeUniversitaria:body.sedeUniversitaria,
         facultad: body.facultad,

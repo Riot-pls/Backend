@@ -18,7 +18,7 @@ var roleValidos={
 // Array de los distintos tipos de usuario.
 var tipoUsuarioValido={
 
-    values:['Estudiante','Docente'],
+    values:['Estudiante','Docente','Jefe de programa'],
     message: '{VALUE} NO ES UN TIPO DE USUARIO PERMITIDO'
 
 };
@@ -51,6 +51,13 @@ var programaUniversitarioValidos={
 
 };
 
+
+var generoValidos={
+
+    values:['Masculino','Femenino'],
+    message: '{VALUE} NO ES UN GÉNERO PERMITIDO'
+};
+
 var usuarioSchema = new Schema({  //Esquema con validaciones.
 
     nombres:{ type:String, required:[true, 'El nombre es necesario']},
@@ -61,6 +68,7 @@ var usuarioSchema = new Schema({  //Esquema con validaciones.
     tipoUsuario:{ type:String, required:true,default:'Estudiante', enum: tipoUsuarioValido},
     tipoID:{ type:String, required:true,default:'C.C', enum: tipoIDValido},
     numDocumento:{ type:String,unique:true, required:[true, 'El numero de documento es necesario']},
+    genero:{ type:String, required:true,default:'Masculino', enum: generoValidos},
     codigoUniversitario:{ type:String,unique:true, required:[true, 'El codigo universitario es necesario']},
     sedeUniversitaria:{ type:String, required:[true, 'La sede es necesaria'], enum: sedesUniversitariasValidas},
     facultad:{ type:String, required:[true, 'La facultad es necesaria'], enum: facultadesValidas},
