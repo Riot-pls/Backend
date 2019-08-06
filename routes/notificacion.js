@@ -1,60 +1,41 @@
+// var bcrypt = require('bcryptjs');
+// var jwt = require('jsonwebtoken');
+// var mdAutenticacion = require('../middlewares/autenticacion');
+// var SEED = require('../config/config').SEED;
+
 var express = require('express');
-var bcrypt = require('bcryptjs');
-var jwt = require('jsonwebtoken');
-
-
-var mdAutenticacion = require('../middlewares/autenticacion');
-//var SEED = require('../config/config').SEED;
-
 var app = express();
-
-var Articulo = require('../models/articulo');
+var Notificacion = require('../models/notificacion');
 
 //===============================================
-//  Obteber todos los articulos
+//  Obteber todos los notificaciones
 //===============================================
-
-
-
 
 app.get('/', (req, res, next) => {
-
     var desde = req.query.desde || 0;
     desde = Number(desde);
-    Articulo.find({}, 'rutaArticulo estado').skip(desde).limit(5).exec(
-        (err, articulos) => {
-
+    Notificacion.find({}, 'emisor receptor tipoNotificacion').skip(desde).limit(5).exec(
+        (err, notificaciones) => {
             if (err) {
                 return res.status(500).json({
                     ok: false,
-                    mensaje: 'Error cargando articulos!',
+                    mensaje: 'Error cargando notificaciones!',
                     errors: err
                 });
             }
-
-
-            Articulo.count({}, (err, conteo) => {
+            Notificacion.count({}, (err, conteo) => {
                 res.status(200).json({
                     ok: true,
-                    articulo: articulos,
+                    notificacion: notificaciones,
                     total: conteo
                 });
             })
-
-
-
-
         }); //Metodo de mongoose.
-
-
-
-
-
 });
 
 
 //===============================================
-//  Actualizar articulos
+//  Actualizar notificaciones
 //===============================================
 // Se puede utilizar put or path
 
@@ -65,140 +46,102 @@ app.put('/:id', (req, res) => {
     var id = req.params.id;
     var body = req.body;
 
-    Articulo.findById(id, (err, articulo) => {
+    Notificacion.findById(id, (err, notificacion) => {
 
         if (err) {
             return res.status(500).json({
                 ok: false,
-                mensaje: 'Error al buscar articulos!',
+                mensaje: 'Error al buscar notificaciones!',
                 errors: err
             });
         }
 
-        if (!articulo) {
+        if (!notificacion) {
             return res.status(400).json({
                 ok: false,
-                mensaje: 'EL articulo con el ' + id + ' no existe.',
-                errors: { message: 'No existe un articulo con ese ID' }
+                mensaje: 'La notificación con el ' + id + ' no existe.',
+                errors: { message: 'No existe un notificación con ese ID' }
             });
         }
 
-        //rutaArticulo estado
-        articulo.rutaArticulo = body.rutaArticulo;
-        articulo.estado = body.estado;
+        // emisor receptor tipoNotificacion
+        notificacion.emisor = body.emisor;
+        notificacion.receptor = body.receptor;
+        notificacion.tipoNotificacion = body.tipoNotificacion;
 
-        articulo.save((err, articuloGuardado) => {
-
+        notificacion.save((err, notificacionGuardada) => {
             if (err) {
                 return res.status(400).json({
                     ok: false,
-                    mensaje: 'Error al actualizar articulo!',
+                    mensaje: 'Error al actualizar notificacion!',
                     errors: err
                 });
             }
-
             res.status(200).json({
                 ok: true,
-                articulo: articuloGuardado
+                notificacion: notificacionGuardada
             });
-
-
         });
-
-
-
-
-
     });
-
-
 });
 
-
-
-
-
-
 //===============================================
-//  Crear un nuevo articulo
+//  Crear un nuevo notificacion
 //===============================================
 
 app.post('/', (req, res) => {
-
-
     var body = req.body;
 
-    var articulo = new Articulo({ //referencia a una variable de tipo articulo
-
-        rutaArticulo: body.rutaArticulo,
-        estado: body.estado
+    var notificacion = new Notificacion({ //referencia a una variable de tipo notificacion
+        emisor: body.emisor,
+        receptor: body.receptor,
+        tipoNotificacion: body.tipoNotificacion
     });
 
-    articulo.save((err, articuloGuardado) => {
-
+    notificacion.save((err, notificacionGuardada) => {
         if (err) {
             return res.status(400).json({
                 ok: false,
-                mensaje: 'Error al crear articulos!',
+                mensaje: 'Error al crear notificaciones!',
                 errors: err
             });
-
         }
         res.status(201).json({
             ok: true,
-            articulo: articuloGuardado,
+            notificacion: notificacionGuardada,
             usuariotoken: req.usuario
         });
-
-
     });
-
 });
 
-
-
-
 //===============================================
-//  Eliminar articulos por el id.
+//  Eliminar notificaciones por el id.
 //===============================================
 // CAMBIO!!! -*-*-*-*-*-*-*
 //app.delete('/:id',[mdAutenticacion.verificarToken, mdAutenticacion.verificaraADMIN_ROLE],(req,res)=>{
 app.delete('/:id', (req, res) => {
-
     var id = req.params.id; // id por el /:id.
 
-
-    Articulo.findByIdAndRemove(id, (err, articuloBorrado) => {
-
-
+    Notificacion.findByIdAndRemove(id, (err, notificacionBorrada) => {
         if (err) {
             return res.status(500).json({
                 ok: false,
-                mensaje: 'Error al borrar articulo!',
+                mensaje: 'Error al borrar notificacion!',
                 errors: err
             });
         }
-
-        if (!articuloBorrado) {
+        if (!notificacionBorrada) {
             return res.status(400).json({
                 ok: false,
-                mensaje: 'No existe un articulo con este id: ' + id + '.',
-                errors: { message: 'No existe un articulo con ese ID' }
+                mensaje: 'No existe un notificacion con este id: ' + id + '.',
+                errors: { message: 'No existe un notificacion con ese ID' }
             });
         }
         res.status(200).json({
             ok: true,
-            articulo: articuloBorrado
+            notificacion: notificacionBorrada
         });
-
-
-
-
     });
-
-
 });
-
-
 
 module.exports = app;

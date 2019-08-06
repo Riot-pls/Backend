@@ -1,4 +1,3 @@
-
 var express = require('express');
 var bcrypt = require('bcryptjs');
 var jwt = require('jsonwebtoken');
@@ -7,9 +6,9 @@ var jwt = require('jsonwebtoken');
 var mdAutenticacion = require('../middlewares/autenticacion');
 //var SEED = require('../config/config').SEED;
 
-var app= express();
+var app = express();
 
-var programaUniversitario= require('../models/programaUniversitario');
+var programaUniversitario = require('../models/programaUniversitario');
 
 
 //===============================================
@@ -19,42 +18,42 @@ var programaUniversitario= require('../models/programaUniversitario');
 
 
 
-app.get('/',(req,res,next)=>{
+app.get('/', (req, res, next) => {
 
-    var desde=req.query.desde ||0;
-    desde=Number(desde);
+    var desde = req.query.desde || 0;
+    desde = Number(desde);
 
-// CAMBIO!!! -*-*-*-*-*-*-*
-programaUniversitario.find({},'SNIES nombre numCreditos nivelAcademico tituloOtogado modalidadFormacion').skip(desde).limit(5).exec( 
-        (err,programa)=>{
+    // CAMBIO!!! -*-*-*-*-*-*-*
+    programaUniversitario.find({}, 'SNIES nombre numCreditos nivelAcademico tituloOtogado modalidadFormacion jefePrograma').skip(desde).limit(5).exec(
+        (err, programa) => {
 
-        if(err){
-            return res.status(500).json({
-                ok:false,
-                mensaje: 'Error cargando programas!',
-                errors:err
-            });
-        }
-
-
-        programaUniversitario.count({},(err,conteo)=>{
-            res.status(200).json({
-                ok:true,
-                programa: programa,
-                total:conteo
-            });
-        })
-      
-       
+            if (err) {
+                return res.status(500).json({
+                    ok: false,
+                    mensaje: 'Error cargando programas!',
+                    errors: err
+                });
+            }
 
 
-    });  //Metodo de mongoose.
+            programaUniversitario.count({}, (err, conteo) => {
+                res.status(200).json({
+                    ok: true,
+                    programa: programa,
+                    total: conteo
+                });
+            })
 
 
-  
-    
-    
-    });
+
+
+        }); //Metodo de mongoose.
+
+
+
+
+
+});
 
 //===============================================
 //  Actualizar programas
@@ -63,58 +62,59 @@ programaUniversitario.find({},'SNIES nombre numCreditos nivelAcademico tituloOto
 
 // CAMBIO!!! -*-*-*-*-*-*-*
 //app.put('/:id',[mdAutenticacion.verificarToken,mdAutenticacion.verificaraADMIN_ROLE_o_MismoUsuario],(req,res)=>{
-app.put('/:id',(req,res)=>{
+app.put('/:id', (req, res) => {
 
-var id = req.params.id;
-var body = req.body;
+    var id = req.params.id;
+    var body = req.body;
 
-programaUniversitario.findById(id,(err,programa)=>{
-    
-    if(err){
-        return res.status(500).json({
-            ok:false,
-            mensaje: 'Error al buscar programas!',
-            errors:err
-        });
-    }
+    programaUniversitario.findById(id, (err, programa) => {
 
-    if(!programa){
-        return res.status(400).json({
-            ok:false,
-            mensaje: 'El programa con el '+id+' no existe.',
-            errors:{message: 'No existe un programa con ese ID'}
-        });
-    }
-
-
-    programa.SNIES = body.SNIES;
-    programa.nombre= body.nombre;
-    programa.numCreditos = body.numCreditos;
-    programa.nivelAcademico= body.nivelAcademico;
-    programa.tituloOtogado= body.tituloOtogado;
-    programa.modalidadFormacion=body.modalidadFormacion;
-
-    programa.save((err,programaGuardado)=>{
-
-        if(err){
-            return res.status(400).json({
-                ok:false,
-                mensaje: 'Error al actualizar programas!',
-                errors:err
+        if (err) {
+            return res.status(500).json({
+                ok: false,
+                mensaje: 'Error al buscar programas!',
+                errors: err
             });
         }
-        res.status(200).json({
-            ok:true,
-            programa: programaGuardado
+
+        if (!programa) {
+            return res.status(400).json({
+                ok: false,
+                mensaje: 'El programa con el ' + id + ' no existe.',
+                errors: { message: 'No existe un programa con ese ID' }
+            });
+        }
+
+
+        programa.SNIES = body.SNIES;
+        programa.nombre = body.nombre;
+        programa.numCreditos = body.numCreditos;
+        programa.nivelAcademico = body.nivelAcademico;
+        programa.tituloOtogado = body.tituloOtogado;
+        programa.modalidadFormacion = body.modalidadFormacion;
+        programa.jefePrograma = body.jefePrograma;
+
+        programa.save((err, programaGuardado) => {
+
+            if (err) {
+                return res.status(400).json({
+                    ok: false,
+                    mensaje: 'Error al actualizar programas!',
+                    errors: err
+                });
+            }
+            res.status(200).json({
+                ok: true,
+                programa: programaGuardado
+            });
+
+
         });
+
 
 
     });
 
-
-
-});
-  
 
 });
 
@@ -127,42 +127,43 @@ programaUniversitario.findById(id,(err,programa)=>{
 //  Crear un nuevo programa
 //===============================================
 
-app.post('/',(req,res)=>{
+app.post('/', (req, res) => {
 
 
     var body = req.body;
 
-// SNIES nombre numCreditos nivelAcademico tituloOtogado modalidadFormacion
+    // SNIES nombre numCreditos nivelAcademico tituloOtogado modalidadFormacion
 
-    var programa= new programaUniversitario({ //referencia a una variable de tipo usuario
+    var programa = new programaUniversitario({ //referencia a una variable de tipo usuario
 
         SNIES: body.SNIES,
         nombre: body.nombre,
         numCreditos: body.numCreditos,
-        nivelAcademico:body.nivelAcademico,
-        tituloOtogado:body.tituloOtogado,
-        modalidadFormacion:body.modalidadFormacion
-    }); 
+        nivelAcademico: body.nivelAcademico,
+        tituloOtogado: body.tituloOtogado,
+        modalidadFormacion: body.modalidadFormacion,
+        jefePrograma: body.jefePrograma
+    });
 
-    programa.save((err,programaGuardado)=>{
+    programa.save((err, programaGuardado) => {
 
-        if(err){
+        if (err) {
             return res.status(400).json({
-                ok:false,
+                ok: false,
                 mensaje: 'Error al crear programas!',
-                errors:err
+                errors: err
             });
-          
+
         }
         res.status(201).json({
-            ok:true,
+            ok: true,
             programa: programaGuardado,
             usuariotoken: req.usuario
         });
 
 
     });
-    
+
 });
 
 
@@ -173,31 +174,31 @@ app.post('/',(req,res)=>{
 //===============================================
 // CAMBIO!!! -*-*-*-*-*-*-*
 //app.delete('/:id',[mdAutenticacion.verificarToken, mdAutenticacion.verificaraADMIN_ROLE],(req,res)=>{
-app.delete('/:id',(req,res)=>{
+app.delete('/:id', (req, res) => {
 
     var id = req.params.id; // id por el /:id.
 
 
-    programaUniversitario.findByIdAndRemove(id,(err,programaBorrado)=>{
+    programaUniversitario.findByIdAndRemove(id, (err, programaBorrado) => {
 
 
-        if(err){
+        if (err) {
             return res.status(500).json({
-                ok:false,
+                ok: false,
                 mensaje: 'Error al borrar programas!',
-                errors:err
+                errors: err
             });
         }
 
-        if(!programaBorrado){
+        if (!programaBorrado) {
             return res.status(400).json({
-                ok:false,
-                mensaje: 'No existe un programa con este id: '+id+'.',
-                errors:{message: 'No existe un programa con ese ID'}
+                ok: false,
+                mensaje: 'No existe un programa con este id: ' + id + '.',
+                errors: { message: 'No existe un programa con ese ID' }
             });
         }
         res.status(200).json({
-            ok:true,
+            ok: true,
             programa: programaBorrado
         });
 
@@ -211,4 +212,4 @@ app.delete('/:id',(req,res)=>{
 
 
 
-    module.exports= app;
+module.exports = app;

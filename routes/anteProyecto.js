@@ -8,7 +8,7 @@ var mdAutenticacion = require('../middlewares/autenticacion');
 
 var app = express();
 
-var anteProyecto = require('../models/anteProyecto');
+var AnteProyecto = require('../models/anteProyecto');
 
 //===============================================
 //  Obteber todos los anteProyectos
@@ -21,7 +21,7 @@ app.get('/', (req, res, next) => {
 
     var desde = req.query.desde || 0;
     desde = Number(desde);
-    anteProyecto.find({}, 'rutaAnteproyecto estado').skip(desde).limit(5).exec(
+    AnteProyecto.find({}, 'rutaAnteproyecto estado').skip(desde).limit(5).exec(
         (err, anteproyectos) => {
 
             if (err) {
@@ -33,7 +33,7 @@ app.get('/', (req, res, next) => {
             }
 
 
-            anteProyecto.count({}, (err, conteo) => {
+            AnteProyecto.count({}, (err, conteo) => {
                 res.status(200).json({
                     ok: true,
                     anteproyecto: anteproyectos,
@@ -65,7 +65,7 @@ app.put('/:id', (req, res) => {
     var id = req.params.id;
     var body = req.body;
 
-    anteProyecto.findById(id, (err, anteproyecto) => {
+    AnteProyecto.findById(id, (err, anteproyecto) => {
 
         if (err) {
             return res.status(500).json({
@@ -128,7 +128,7 @@ app.post('/', (req, res) => {
 
     var body = req.body;
 
-    var anteProyecto = new anteProyecto({ //referencia a una variable de tipo anteProyecto
+    var anteProyecto = new AnteProyecto({ //referencia a una variable de tipo anteProyecto
 
         rutaAnteproyecto: body.rutaAnteproyecto,
         estado: body.estado
@@ -168,7 +168,7 @@ app.delete('/:id', (req, res) => {
     var id = req.params.id; // id por el /:id.
 
 
-    anteProyecto.findByIdAndRemove(id, (err, anteProyectoBorrado) => {
+    AnteProyecto.findByIdAndRemove(id, (err, anteProyectoBorrado) => {
 
 
         if (err) {

@@ -31,9 +31,12 @@ var appRoutes = require('./routes/app');
 var sedeUniversitaria = require('./routes/sedeUniversitaria');
 var programaUniversitario = require('./routes/programaUniversitario');
 var facultad = require('./routes/facultad');
+var solicitud = require('./routes/solicitud');
 var anteProyecto = require('./routes/anteProyecto');
 var proyecto = require('./routes/proyecto');
 var articulo = require('./routes/articulo');
+var notificacion = require('./routes/notificacion');
+var tipoNotificacion = require('./routes/tipoNotificacion');
 
 var usuarioRoutes = require('./routes/usuario');
 var loginRoutes = require('./routes/login');
@@ -72,9 +75,12 @@ app.use('/uploads', serveIndex(__dirname + '/uploads'));*/
 app.use('/sedeUniversitaria', sedeUniversitaria);
 app.use('/programaUniversitario', programaUniversitario);
 app.use('/facultad', facultad);
-app.use('/facultad', anteProyecto);
-app.use('/facultad', proyecto);
-app.use('/facultad', articulo);
+app.use('/solicitud', solicitud);
+app.use('/anteProyecto', anteProyecto);
+app.use('/proyecto', proyecto);
+app.use('/articulo', articulo);
+app.use('/notificacion', notificacion);
+app.use('/tipoNotificacion', tipoNotificacion);
 
 app.use('/usuario', usuarioRoutes);
 app.use('/login', loginRoutes);

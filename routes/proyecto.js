@@ -8,7 +8,7 @@ var mdAutenticacion = require('../middlewares/autenticacion');
 
 var app = express();
 
-var proyecto = require('../models/proyecto');
+var Proyecto = require('../models/proyecto');
 
 //===============================================
 //  Obteber todos los proyectos
@@ -21,7 +21,7 @@ app.get('/', (req, res, next) => {
 
     var desde = req.query.desde || 0;
     desde = Number(desde);
-    proyecto.find({}, 'tema palabraClave1 palabraClave2 palabraClave3 rutaProyecto estado').skip(desde).limit(5).exec(
+    Proyecto.find({}, 'tema palabraClave1 palabraClave2 palabraClave3 rutaProyecto estado').skip(desde).limit(5).exec(
         (err, proyectos) => {
 
             if (err) {
@@ -33,7 +33,7 @@ app.get('/', (req, res, next) => {
             }
 
 
-            proyecto.count({}, (err, conteo) => {
+            Proyecto.count({}, (err, conteo) => {
                 res.status(200).json({
                     ok: true,
                     proyecto: proyectos,
@@ -65,7 +65,7 @@ app.put('/:id', (req, res) => {
     var id = req.params.id;
     var body = req.body;
 
-    proyecto.findById(id, (err, proyecto) => {
+    Proyecto.findById(id, (err, proyecto) => {
 
         if (err) {
             return res.status(500).json({
@@ -132,7 +132,7 @@ app.post('/', (req, res) => {
 
     var body = req.body;
 
-    var proyecto = new proyecto({ //referencia a una variable de tipo proyecto
+    var proyecto = new Proyecto({ //referencia a una variable de tipo proyecto
 
         tema: body.tema,
         palabraClave1: body.palabraClave1,
@@ -176,7 +176,7 @@ app.delete('/:id', (req, res) => {
     var id = req.params.id; // id por el /:id.
 
 
-    proyecto.findByIdAndRemove(id, (err, proyectoBorrado) => {
+    Proyecto.findByIdAndRemove(id, (err, proyectoBorrado) => {
 
 
         if (err) {

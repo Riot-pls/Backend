@@ -1,60 +1,41 @@
+// var bcrypt = require('bcryptjs');
+// var jwt = require('jsonwebtoken');
+// var mdAutenticacion = require('../middlewares/autenticacion');
+// var SEED = require('../config/config').SEED;
+
 var express = require('express');
-var bcrypt = require('bcryptjs');
-var jwt = require('jsonwebtoken');
-
-
-var mdAutenticacion = require('../middlewares/autenticacion');
-//var SEED = require('../config/config').SEED;
-
 var app = express();
-
-var Articulo = require('../models/articulo');
+var TipoNotificacion = require('../models/tipoNotificacion');
 
 //===============================================
-//  Obteber todos los articulos
+//  Obteber todos los tipo notificaciones
 //===============================================
-
-
-
 
 app.get('/', (req, res, next) => {
-
     var desde = req.query.desde || 0;
     desde = Number(desde);
-    Articulo.find({}, 'rutaArticulo estado').skip(desde).limit(5).exec(
-        (err, articulos) => {
-
+    TipoNotificacion.find({}, 'nombre mensaje').skip(desde).limit(5).exec(
+        (err, tipoNotificaciones) => {
             if (err) {
                 return res.status(500).json({
                     ok: false,
-                    mensaje: 'Error cargando articulos!',
+                    mensaje: 'Error cargando tipo notificaciones!',
                     errors: err
                 });
             }
-
-
-            Articulo.count({}, (err, conteo) => {
+            TipoNotificacion.count({}, (err, conteo) => {
                 res.status(200).json({
                     ok: true,
-                    articulo: articulos,
+                    tipoNotificacion: tipoNotificaciones,
                     total: conteo
                 });
             })
-
-
-
-
         }); //Metodo de mongoose.
-
-
-
-
-
 });
 
 
 //===============================================
-//  Actualizar articulos
+//  Actualizar tipoNotificaciones
 //===============================================
 // Se puede utilizar put or path
 
@@ -65,140 +46,100 @@ app.put('/:id', (req, res) => {
     var id = req.params.id;
     var body = req.body;
 
-    Articulo.findById(id, (err, articulo) => {
+    TipoNotificacion.findById(id, (err, tipoNotificacion) => {
 
         if (err) {
             return res.status(500).json({
                 ok: false,
-                mensaje: 'Error al buscar articulos!',
+                mensaje: 'Error al buscar tipo notificaciones!',
                 errors: err
             });
         }
 
-        if (!articulo) {
+        if (!tipoNotificacion) {
             return res.status(400).json({
                 ok: false,
-                mensaje: 'EL articulo con el ' + id + ' no existe.',
-                errors: { message: 'No existe un articulo con ese ID' }
+                mensaje: 'El tipo notificacion con el ' + id + ' no existe.',
+                errors: { message: 'No existe un tipo notificacione con ese ID' }
             });
         }
 
-        //rutaArticulo estado
-        articulo.rutaArticulo = body.rutaArticulo;
-        articulo.estado = body.estado;
+        // emisor receptor tipoNotificacion
+        tipoNotificacion.nombre = body.nombre;
+        tipoNotificacion.mensaje = body.mensaje;
 
-        articulo.save((err, articuloGuardado) => {
-
+        tipoNotificacion.save((err, tipoNotificacionGuardada) => {
             if (err) {
                 return res.status(400).json({
                     ok: false,
-                    mensaje: 'Error al actualizar articulo!',
+                    mensaje: 'Error al actualizar tipo notificacion!',
                     errors: err
                 });
             }
-
             res.status(200).json({
                 ok: true,
-                articulo: articuloGuardado
+                tipoNotificacion: tipoNotificacionGuardada
             });
-
-
         });
-
-
-
-
-
     });
-
-
 });
 
-
-
-
-
-
 //===============================================
-//  Crear un nuevo articulo
+//  Crear un nuevo tipo Notificacion
 //===============================================
 
 app.post('/', (req, res) => {
-
-
     var body = req.body;
 
-    var articulo = new Articulo({ //referencia a una variable de tipo articulo
-
-        rutaArticulo: body.rutaArticulo,
-        estado: body.estado
+    var tipoNotificacion = new TipoNotificacion({ //referencia a una variable de tipo tipoNotificacion
+        nombre: body.nombre,
+        mensaje: body.mensaje,
     });
 
-    articulo.save((err, articuloGuardado) => {
-
+    tipoNotificacion.save((err, tipoNotificacionGuardada) => {
         if (err) {
             return res.status(400).json({
                 ok: false,
-                mensaje: 'Error al crear articulos!',
+                mensaje: 'Error al crear tipo Notificaciones!',
                 errors: err
             });
-
         }
         res.status(201).json({
             ok: true,
-            articulo: articuloGuardado,
+            tipoNotificacion: tipoNotificacionGuardada,
             usuariotoken: req.usuario
         });
-
-
     });
-
 });
 
-
-
-
 //===============================================
-//  Eliminar articulos por el id.
+//  Eliminar tipo Notificaciones por el id.
 //===============================================
 // CAMBIO!!! -*-*-*-*-*-*-*
 //app.delete('/:id',[mdAutenticacion.verificarToken, mdAutenticacion.verificaraADMIN_ROLE],(req,res)=>{
 app.delete('/:id', (req, res) => {
-
     var id = req.params.id; // id por el /:id.
 
-
-    Articulo.findByIdAndRemove(id, (err, articuloBorrado) => {
-
-
+    TipoNotificacion.findByIdAndRemove(id, (err, tipoNotificacionBorrada) => {
         if (err) {
             return res.status(500).json({
                 ok: false,
-                mensaje: 'Error al borrar articulo!',
+                mensaje: 'Error al borrar tipo notificacion!',
                 errors: err
             });
         }
-
-        if (!articuloBorrado) {
+        if (!tipoNotificacionBorrada) {
             return res.status(400).json({
                 ok: false,
-                mensaje: 'No existe un articulo con este id: ' + id + '.',
-                errors: { message: 'No existe un articulo con ese ID' }
+                mensaje: 'No existe un tipo notificacion con este id: ' + id + '.',
+                errors: { message: 'No existe un tipo notificacion con ese ID' }
             });
         }
         res.status(200).json({
             ok: true,
-            articulo: articuloBorrado
+            tipoNotificacion: tipoNotificacionBorrada
         });
-
-
-
-
     });
-
-
 });
-
-
 
 module.exports = app;
