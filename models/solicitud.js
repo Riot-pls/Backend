@@ -6,6 +6,8 @@ var tipoModalidadValido = {
     message: '{VALUE} NO ES UN TIPO DE MODADLIDAD VALIDO'
 };
 
+
+
 var solicitudSchema = new Schema({ //Esquema con validaciones.
 
     tipoModalidad: { type: String, default: 'PROYECTO DE GRADO', enum: tipoModalidadValido, required: [true, 'El tipo modalidad es necesario'] },

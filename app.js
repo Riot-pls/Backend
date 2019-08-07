@@ -36,7 +36,6 @@ var anteProyecto = require('./routes/anteProyecto');
 var proyecto = require('./routes/proyecto');
 var articulo = require('./routes/articulo');
 var notificacion = require('./routes/notificacion');
-var tipoNotificacion = require('./routes/tipoNotificacion');
 
 var usuarioRoutes = require('./routes/usuario');
 var loginRoutes = require('./routes/login');
@@ -80,7 +79,6 @@ app.use('/anteProyecto', anteProyecto);
 app.use('/proyecto', proyecto);
 app.use('/articulo', articulo);
 app.use('/notificacion', notificacion);
-app.use('/tipoNotificacion', tipoNotificacion);
 
 app.use('/usuario', usuarioRoutes);
 app.use('/login', loginRoutes);
