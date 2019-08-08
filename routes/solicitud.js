@@ -14,7 +14,7 @@ var Solicitud = require('../models/solicitud');
 app.get('/', (req, res, next) => {
     var desde = req.query.desde || 0;
     desde = Number(desde);
-    Solicitud.find({}, 'tipoModalidad tituloProyecto estudiante1 consejero1 jefePrograma').skip(desde).limit(5).exec(
+    Solicitud.find({}, 'tipoModalidad tituloProyecto estudiante1  consejero1 jefePrograma anteproyecto proyecto').skip(desde).limit(5).exec(
         (err, solicitudes) => {
             if (err) {
                 return res.status(500).json({

@@ -14,7 +14,7 @@ var Notificacion = require('../models/notificacion');
 app.get('/', (req, res, next) => {
     var desde = req.query.desde || 0;
     desde = Number(desde);
-    Notificacion.find({}, 'emisor receptor tipoNotificacion').skip(desde).limit(5).exec(
+    Notificacion.find({}, 'emisor receptor tipoNotificacionEmisor tipoNotificacionReceptor').skip(desde).exec(
         (err, notificaciones) => {
             if (err) {
                 return res.status(500).json({
@@ -67,8 +67,8 @@ app.put('/:id', (req, res) => {
         // emisor receptor tipoNotificacion
         notificacion.emisor = body.emisor;
         notificacion.receptor = body.receptor;
-        notificacion.tipoNotificacion = body.tipoNotificacion;
-
+        notificacion.tipoNotificacionEmisor = body.tipoNotificacionEmisor;
+        notificacion.tipoNotificacionReceptor = body.tipoNotificacionReceptor;
         notificacion.save((err, notificacionGuardada) => {
             if (err) {
                 return res.status(400).json({
@@ -95,7 +95,9 @@ app.post('/', (req, res) => {
     var notificacion = new Notificacion({ //referencia a una variable de tipo notificacion
         emisor: body.emisor,
         receptor: body.receptor,
-        tipoNotificacion: body.tipoNotificacion
+        tipoNotificacionEmisor: body.tipoNotificacionEmisor,
+        tipoNotificacionReceptor: body.tipoNotificacionReceptor
+
     });
 
     notificacion.save((err, notificacionGuardada) => {

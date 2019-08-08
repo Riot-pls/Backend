@@ -9,7 +9,7 @@ var mdAutenticacion = require('../middlewares/autenticacion');
 var app = express();
 
 var programaUniversitario = require('../models/programaUniversitario');
-
+var Usuario = require('../models/usuario');
 
 //===============================================
 //  Obteber todos los programas
@@ -54,6 +54,9 @@ app.get('/', (req, res, next) => {
 
 
 });
+
+
+
 
 //===============================================
 //  Actualizar programas

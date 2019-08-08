@@ -56,8 +56,64 @@ app.get('/',(req,res,next)=>{
     
     });
 
-
-
+/*
+// ==========================================
+// Obtener jefe de programa por ID <- Nuevo servicio.
+// ==========================================
+app.get('/:id', (req, res) => {
+    var id = req.params.id;
+    Usuario.findById(id)
+    .populate('usuario', 'nombres apellidos email')
+        .exec((err, usuario) => {
+            if (err) {
+                return res.status(500).json({
+                    ok: false,
+                    mensaje: 'Error al buscar usuario',
+                    errors: err
+                });
+            }
+            if (!usuario) {
+                return res.status(400).json({
+                    ok: false,
+                    mensaje: 'El usuario con el id ' + id + 'no existe',
+                    errors: { message: 'No existe un usuario con ese ID' }
+                });
+            }
+            res.status(200).json({
+            ok: true,
+            usuario: usuario
+            });
+        })
+    })
+*/
+// ==========================================
+// Obtener jefe de programa por C.C <- Nuevo servicio.
+// ==========================================
+app.get('/:numDocumento', (req, res) => {
+    var numDocumento = req.params.numDocumento;
+    Usuario.findOne({numDocumento:numDocumento})
+    .populate('usuario', 'nombres apellidos email')
+        .exec((err, usuario) => {
+            if (err) {
+                return res.status(500).json({
+                    ok: false,
+                    mensaje: 'Error al buscar usuario por c.c',
+                    errors: err
+                });
+            }
+            if (!usuario) {
+                return res.status(400).json({
+                    ok: false,
+                    mensaje: 'El usuario con el id ' + numDocumento + 'no existe',
+                    errors: { message: 'No existe un usuario con ese ID' }
+                });
+            }
+            res.status(200).json({
+            ok: true,
+            usuario: usuario
+            });
+        })
+    })
 
 //===============================================
 //  Verificar token
