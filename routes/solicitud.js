@@ -14,7 +14,7 @@ var Solicitud = require('../models/solicitud');
 app.get('/', (req, res, next) => {
     var desde = req.query.desde || 0;
     desde = Number(desde);
-    Solicitud.find({}, 'tipoModalidad tituloProyecto estudiante1  consejero1 jefePrograma anteproyecto proyecto').skip(desde).limit(5).exec(
+    Solicitud.find({}, 'tipoModalidad tituloProyecto estudiante1 estudiante2 estudiante3 consejero1 consejero2 consejero3 jefePrograma anteproyecto proyecto articulo').skip(desde).limit(50).exec(
         (err, solicitudes) => {
             if (err) {
                 return res.status(500).json({
@@ -114,6 +114,7 @@ app.post('/', (req, res) => {
         proyecto: body.proyecto,
         articulo: body.articulo
     });
+    
 
     solicitud.save((err, solicitudGuardada) => {
         if (err) {
@@ -139,7 +140,7 @@ app.post('/', (req, res) => {
 app.delete('/:id', (req, res) => {
     var id = req.params.id; // id por el /:id.
 
-    Notificacion.findByIdAndRemove(id, (err, solicitudBorrada) => {
+    Solicitud.findByIdAndRemove(id, (err, solicitudBorrada) => {
         if (err) {
             return res.status(500).json({
                 ok: false,

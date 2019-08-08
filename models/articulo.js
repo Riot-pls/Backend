@@ -9,7 +9,6 @@ var articuloChema = new Schema({ //Esquema con validaciones.
 
 });
 
-articuloChema.plugin(uniqueValidator, { message: '{PATH} debe ser unico' });
 
 // ruta estado
 module.exports = mongoose.model('articulo', articuloChema);

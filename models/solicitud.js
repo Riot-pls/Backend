@@ -10,8 +10,8 @@ var tipoModalidadValido = {
 
 var solicitudSchema = new Schema({ //Esquema con validaciones.
 
-    tipoModalidad: { type: String, default: 'PROYECTO DE GRADO', enum: tipoModalidadValido, required: [false, 'El tipo modalidad es necesario'] },
-    tituloProyecto: { type: String, required: [false, 'El titulo del proyecto es necesario'] },
+    tipoModalidad: { type: String, default: 'PROYECTO DE GRADO', enum: tipoModalidadValido, required: [true, 'El tipo modalidad es necesario'] },
+    tituloProyecto: { type: String, required: [true, 'El titulo del proyecto es necesario'] },
     estudiante1: { type: String, required: [false, 'El id estudiante es un campo obligatorio'] },
     estudiante2: { type: String, required: false },
     estudiante3: { type: String, required: false },
