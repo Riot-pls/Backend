@@ -96,7 +96,9 @@ function obtenerMenu(ROLE) {
           submenu:[
             {titulo:' Inicio',url:'/search', icono:'fas fa-home'},
            /* {titulo:' Plantilla solicitud',url:'/solicitud', icono:'far fa-file-alt'},*/
-            {titulo:' Proyecto',url:'/progreso', icono:'fas fa-file-invoice'}
+            {titulo:' Proyecto',url:'/progreso', icono:'fas fa-file-invoice'},
+            {titulo:' Pasantía',url:'/progreso', icono:'fas fa-puzzle-piece'},
+            {titulo:' Semillero',url:'/progreso', icono:'fas fa-users'}
             
             
             /*,{titulo:' Anteproyecto',url:'/anteproyecto', icono:'fas fa-pencil-alt'},
