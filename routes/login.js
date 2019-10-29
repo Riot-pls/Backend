@@ -86,7 +86,7 @@ app.post('/',(req,res)=>{
 
 });
 
-
+// En este sección se establecen los Sidebar personalizados según el rol del usuario. 
 
 function obtenerMenu(ROLE) {
    var menu=[
@@ -97,8 +97,8 @@ function obtenerMenu(ROLE) {
             {titulo:' Inicio',url:'/search', icono:'fas fa-home'},
            /* {titulo:' Plantilla solicitud',url:'/solicitud', icono:'far fa-file-alt'},*/
             {titulo:' Proyecto',url:'/progreso', icono:'fas fa-file-invoice'},
-            {titulo:' Pasantía',url:'/progreso', icono:'fas fa-puzzle-piece'},
-            {titulo:' Semillero',url:'/progreso', icono:'fas fa-users'}
+            {titulo:' Pasantía',url:'/pasantia', icono:'fas fa-puzzle-piece'},
+            {titulo:' Semillero',url:'/semillero', icono:'fas fa-users'}
             
             
             /*,{titulo:' Anteproyecto',url:'/anteproyecto', icono:'fas fa-pencil-alt'},
