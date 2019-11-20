@@ -47,16 +47,46 @@ var uploadRoutes = require('./routes/upload');
 var imagenesRoutes = require('./routes/imagenes');
 
 //Conexion a la base de datos.
-//hospitalDB
-//--------- Cambiar nombre a BPUS !!!!!!! ---------------
-mongoose.connection.openUri('mongodb://localhost:27017/bpusBD', (err, res) => {
+
+/*
+const MongoClient = require('mongodb').MongoClient;
+const uri = "mongodb+srv://bpus:qbsnHKkJk3oXqO6X@cluster0-dyvkj.mongodb.net/test?retryWrites=true&w=majority";
+const client = new MongoClient(uri, { useNewUrlParser: true });
+client.connect(err => {
+  const collection = client.db("test").collection("devices");
+  // perform actions on the collection object
+  client.close();
+});
+
+
+
+*/
+
+
+
+
+mongoose.connect('mongodb+srv://bpus:qbsnHKkJk3oXqO6X@cluster0-dyvkj.mongodb.net/BPUS', (err, res) => {
     //--------- Cambiar nombre a BPUS !!!!!!! ---------------
 
     if (err) throw err;
 
     console.log('Base de datos: \x1b[32m%s\x1b[0m', 'online');
-
+    console.log('Version del mongoose:',mongoose.version)
 });
+
+/*
+
+// LOCAL BD
+
+mongoose.connect('mongodb://localhost:27017/bpusBD', (err, res) => {
+    //--------- Cambiar nombre a BPUS !!!!!!! ---------------
+
+    if (err) throw err;
+
+    console.log('Base de datos: \x1b[32m%s\x1b[0m', 'online');
+    console.log('Version del mongoose:',mongoose.version)
+});
+*/
 
 // Server index config
 /*
